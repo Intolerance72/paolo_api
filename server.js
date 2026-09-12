@@ -48,20 +48,19 @@ time: null
 });
 });
 
-// ⭐ ROUTE POST PRINCIPALE (quella che MT5 chiama)
+// ⭐ ROUTE POST PRINCIPALE (quella che MT5 DEVE vedere)
 app.post("/", (req, res) => {
-console.log("Richiesta POST ricevuta:", req.body);
-res.json({
+res.setHeader("Content-Type", "application/json");
+res.send(JSON.stringify({
 status: "ok",
 message: "POST ricevuto correttamente",
 data: req.body
-});
+}));
 });
 
 // Route POST /update (opzionale)
 app.post('/update', (req, res) => {
 const data = req.body;
-console.log("Dati ricevuti dall'EA:", data);
 res.json({ status: "ok", received: data });
 });
 
