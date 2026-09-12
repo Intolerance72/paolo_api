@@ -4,6 +4,16 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// ⭐ ROUTE POST PRINCIPALE — MT5 DEVE VEDERE QUESTA
+app.post("/", (req, res) => {
+res.setHeader("Content-Type", "application/json");
+res.send(JSON.stringify({
+status: "ok",
+message: "POST ricevuto correttamente",
+data: req.body
+}));
+});
+
 // Ping
 app.get('/ping', (req, res) => {
 res.send('pong');
@@ -46,16 +56,6 @@ title: "Nessuna news disponibile",
 impact: "none",
 time: null
 });
-});
-
-// ⭐ ROUTE POST PRINCIPALE (quella che MT5 DEVE vedere)
-app.post("/", (req, res) => {
-res.setHeader("Content-Type", "application/json");
-res.send(JSON.stringify({
-status: "ok",
-message: "POST ricevuto correttamente",
-data: req.body
-}));
 });
 
 // Route POST /update (opzionale)
