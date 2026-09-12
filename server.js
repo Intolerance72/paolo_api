@@ -13,3 +13,7 @@ res.json({ status: 'ok', time: new Date().toISOString() });
 app.listen(PORT, () => {
 console.log(`Server running on port ${PORT}`);
 });
+
+app.get('/equity', (req, res) => {  
+res.json({ equity: 0 });
+});
