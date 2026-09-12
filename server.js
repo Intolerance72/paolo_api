@@ -46,3 +46,13 @@ impact: "none",
 time: null
 });
 });
+
+app.use(express.json());
+
+app.post('/update', (req, res) => {
+const data = req.body;
+
+console.log("Dati ricevuti dall'EA:", data);
+
+res.json({ status: "ok", received: data });
+});
