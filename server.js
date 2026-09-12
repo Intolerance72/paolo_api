@@ -2,19 +2,20 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+
+// Ping
 app.get('/ping', (req, res) => {
 res.send('pong');
 });
 
+// Status
 app.get('/status', (req, res) => {
 res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-app.listen(PORT, () => {
-console.log(`Server running on port ${PORT}`);
-});
-
-app.get('/equity', (req, res) => {  
+// API Equity
+app.get('/equity', (req, res) => {
 res.json({ equity: 0 });
 });
 
@@ -38,7 +39,7 @@ app.get('/pending_orders', (req, res) => {
 res.json({ pending_orders: 0 });
 });
 
-// API Ultima News Rossa (mini box Home)
+// API Ultima News Rossa
 app.get('/latest_news', (req, res) => {
 res.json({
 title: "Nessuna news disponibile",
@@ -47,12 +48,24 @@ time: null
 });
 });
 
-app.use(express.json());
+// ⭐ ROUTE POST PRINCIPALE (quella che MT5 chiama)
+app.post("/", (req, res) => {
+console.log("Richiesta POST ricevuta:", req.body);
+res.json({
+status: "ok",
+message: "POST ricevuto correttamente",
+data: req.body
+});
+});
 
+// Route POST /update (opzionale)
 app.post('/update', (req, res) => {
 const data = req.body;
-
 console.log("Dati ricevuti dall'EA:", data);
-
 res.json({ status: "ok", received: data });
+});
+
+// Avvio server
+app.listen(PORT, () => {
+console.log(`Server running on port ${PORT}`);
 });
